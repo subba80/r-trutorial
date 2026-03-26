@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn R — Interactive Tutorial</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F3EC;
+    --ink: #1A1612;
+    --forest: #2D5016;
+    --sage: #7A9E5A;
+    --moss: #C8D9B0;
+    --amber: #D4820A;
+    --amber-light: #FFF0CC;
+    --red: #C0392B;
+    --red-light: #FDECEA;
+    --code-bg: #1E1E1E;
+    --code-fg: #D4D4D4;
+    --border: #DDD5C8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: auto auto 1fr;
+  }
+  header {
+    grid-column: 1 / -1;
+    background: var(--forest);
+    color: var(--cream);
+    padding: 18px 36px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 4px solid var(--sage);
+  }
+  .logo { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+  .logo span { color: var(--moss); }
+  .tagline { font-size: 13px; color: var(--moss); font-weight: 300; letter-spacing: 0.05em; margin-left: auto; }
+  #webr-status {
+    display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--moss);
+    background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #888; transition: background 0.4s; }
+  .status-dot.loading { background: var(--amber); animation: pulse 1s infinite; }
+  .status-dot.ready { background: var(--sage); }
+  .status-dot.error { background: var(--red); }
+  @keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }
+  .progress-bar-wrap { grid-column: 1 / -1; background: var(--moss); height: 4px; }
+  .progress-bar-fill { height: 100%; background: var(--forest); transition: width 0.5s ease; }
+  aside { background: #fff; border-right: 1px solid var(--border); padding: 28px 0; overflow-y: auto; }
+  .sidebar-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #999; padding: 0 24px; margin-bottom: 12px; }
+  .lesson-btn {
+    display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 24px;
+    background: none; border: none; cursor: pointer; text-align: left;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink);
+    transition: background 0.15s; position: relative;
+  }
+  .lesson-btn:hover { background: var(--cream); }
+  .lesson-btn.active { background: var(--cream); color: var(--forest); font-weight: 500; }
+  .lesson-btn.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--forest); }
+  .lesson-num {
+    width: 24px; height: 24px; border-radius: 50%; background: var(--moss); color: var(--forest);
+    font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .lesson-btn.active .lesson-num { background: var(--forest); color: #fff; }
+  .lesson-btn.done .lesson-num { background: var(--sage); color: #fff; }
+  .lesson-title { line-height: 1.3; }
+  .lesson-sub { font-size: 11px; color: #999; font-weight: 300; display: block; }
+  main { display: flex; flex-direction: column; overflow: hidden; }
+  .lesson-area { flex: 1; overflow-y: auto; padding: 40px 48px; max-width: 860px; }
+  .lesson-header { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+  .lesson-category { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 6px; }
+  h1 { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 12px; }
+  .lesson-desc { font-size: 16px; color: #555; line-height: 1.7; font-weight: 300; max-width: 640px; }
+  .content-block { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  .content-block p { font-size: 15px; line-height: 1.8; color: #333; margin-bottom: 12px; }
+  .callout { background: var(--amber-light); border-left: 4px solid var(--amber); padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 14px; color: #5a4000; margin-bottom: 20px; }
+  .callout strong { color: var(--amber); }
+  .exercise { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); animation: fadeUp 0.4s ease; }
+  .exercise-header { background: var(--forest); color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; }
+  .ex-label { color: var(--moss); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  textarea.code-input {
+    width: 100%; min-height: 120px; background: var(--code-bg); color: var(--code-fg);
+    font-family: 'JetBrains Mono', monospace; font-size: 13.5px; line-height: 1.7;
+    padding: 18px 20px; border: none; resize: vertical; outline: none; tab-size: 2; letter-spacing: 0.01em;
+  }
+  .run-bar { background: #252526; padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-top: 1px solid #333; }
+  .btn-run {
+    background: var(--sage); color: #fff; border: none; padding: 8px 22px; border-radius: 6px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer;
+    display: flex; align-items: center; gap: 7px; transition: background 0.2s, transform 0.1s;
+  }
+  .btn-run:hover { background: var(--forest); }
+  .btn-run:active { transform: scale(0.97); }
+  .btn-run:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-reset { background: none; border: 1px solid #444; color: #888; padding: 7px 14px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+  .btn-reset:hover { border-color: #888; color: #ccc; }
+  .run-hint { color: #555; font-size: 11px; margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+  .output-area { border-top: 1px solid #333; background: #1a1a1a; min-height: 60px; padding: 14px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #aaa; display: none; white-space: pre-wrap; word-break: break-word; }
+  .output-area.visible { display: block; }
+  .output-area.success { color: #89d185; }
+  .output-area.error-out { color: #f48771; }
+  .output-area.loading-out { color: #888; }
+  .output-plot { border-top: 1px solid #333; background: #fff; display: none; padding: 16px; text-align: center; }
+  .output-plot.visible { display: block; }
+  .output-plot img { max-width: 100%; border-radius: 6px; }
+  .quiz-block { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  .quiz-q { font-family: 'Fraunces', serif; font-size: 17px; margin-bottom: 16px; color: var(--ink); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.2s; background: var(--cream); font-family: 'JetBrains Mono', monospace; }
+  .quiz-opt:hover { border-color: var(--sage); background: var(--moss); }
+  .quiz-opt.correct { border-color: var(--sage); background: #e8f5e9; color: var(--forest); }
+  .quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .quiz-feedback { margin-top: 14px; font-size: 14px; padding: 10px 14px; border-radius: 6px; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #e8f5e9; color: var(--forest); }
+  .quiz-feedback.wrong { background: var(--red-light); color: var(--red); }
+  .nav-buttons { padding: 20px 48px; display: flex; gap: 12px; border-top: 1px solid var(--border); background: #fff; }
+  .btn-nav { padding: 10px 24px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: 2px solid var(--forest); }
+  .btn-nav.primary { background: var(--forest); color: #fff; }
+  .btn-nav.primary:hover { background: #1e3a0a; }
+  .btn-nav.secondary { background: transparent; color: var(--forest); }
+  .btn-nav.secondary:hover { background: var(--moss); }
+  .hidden { display: none; }
+  .loading-msg { font-size: 13px; color: var(--sage); font-family: 'JetBrains Mono', monospace; }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--moss); color: var(--forest); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  h3 { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 10px; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Learn<span>R</span></div>
+  <div class="tagline">Interactive R Tutorial — Powered by WebR</div>
+  <div id="webr-status">
+    <div class="status-dot" id="status-dot"></div>
+    <span id="status-text">R not loaded yet</span>
+  </div>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progress-bar" style="width:16.6%"></div>
+</div>
+
+<aside>
+  <div class="sidebar-label">Lessons</div>
+  <button class="lesson-btn active" onclick="goLesson(0)">
+    <div class="lesson-num" id="num-0">1</div>
+    <div class="lesson-title">Getting Started<span class="lesson-sub">Variables &amp; assignment</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(1)">
+    <div class="lesson-num" id="num-1">2</div>
+    <div class="lesson-title">Data Types<span class="lesson-sub">Numbers, strings, logicals</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(2)">
+    <div class="lesson-num" id="num-2">3</div>
+    <div class="lesson-title">Vectors<span class="lesson-sub">Creating &amp; indexing</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(3)">
+    <div class="lesson-num" id="num-3">4</div>
+    <div class="lesson-title">Functions<span class="lesson-sub">Built-in &amp; custom</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(4)">
+    <div class="lesson-num" id="num-4">5</div>
+    <div class="lesson-title">Data Frames<span class="lesson-sub">Tabular data</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(5)">
+    <div class="lesson-num" id="num-5">6</div>
+    <div class="lesson-title">Visualisation<span class="lesson-sub">Plotting with base R</span></div>
+  </button>
+</aside>
+
+<main>
+  <div class="lesson-area" id="lesson-area"></div>
+  <div class="nav-buttons">
+    <button class="btn-nav secondary hidden" id="btn-prev" onclick="prevLesson()">&#8592; Previous</button>
+    <button class="btn-nav primary" id="btn-next" onclick="nextLesson()">Next Lesson &#8594;</button>
+  </div>
+</main>
+
+<script type="module">
+import { WebR } from 'https://webr.r-wasm.org/v0.4.2/webr.mjs';
+
+let webR = null;
+let webRReady = false;
+let webRLoading = false;
+let webRInitPromise = null;
+
+const statusDot = document.getElementById('status-dot');
+const statusText = document.getElementById('status-text');
+
+function initWebR() {
+  if (webRReady) return Promise.resolve();
+  if (webRInitPromise) return webRInitPromise;
+  webRLoading = true;
+  statusDot.className = 'status-dot loading';
+  statusText.textContent = 'Loading R...';
+  webR = new WebR();
+  webRInitPromise = webR.init().then(() => {
+    webRReady = true;
+    webRLoading = false;
+    statusDot.className = 'status-dot ready';
+    statusText.textContent = 'R is ready';
+  }).catch(e => {
+    statusDot.className = 'status-dot error';
+    statusText.textContent = 'R failed to load';
+    throw e;
+  });
+  return webRInitPromise;
+}
+
+const lessons = [
+  {
+    category: 'Lesson 1',
+    title: 'Getting Started with R',
+    desc: "R is a powerful language for statistical computing and data analysis. Let's begin with the most fundamental concept: storing values in variables.",
+    content: `<div class="content-block">
+      <p>In R, you assign values to variables using the <code>&lt;-</code> operator (or <code>=</code>). Think of a variable as a labelled box that stores a value.</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> The shortcut <code>Alt + -</code> types <code>&lt;-</code> in RStudio. For now, just type it out!</div>
+      <p>Try running the code below — it assigns the number <code>42</code> to a variable called <code>my_number</code>, then prints it.</p>
+    </div>`,
+    exercises: [
+      { label: 'Try it — Variable Assignment', code: `# Assign a value to a variable\nmy_number <- 42\n\n# Print the variable\nmy_number`, hint: 'Run this code and see the output!' },
+      { label: 'Your Turn — Create Your Own', code: `# Create a variable called "my_name" with your name as a string\n# Strings are wrapped in quotes\nmy_name <- "Alice"\n\n# Print it\nmy_name`, hint: 'Change "Alice" to your own name!' }
+    ],
+    quiz: {
+      q: 'Which of these correctly assigns the value 10 to a variable x in R?',
+      options: ['x == 10', 'x <- 10', '10 -> x', 'x = 10'],
+      correctIdx: 1,
+      feedback: 'Correct! <code>x &lt;- 10</code> is the standard R assignment. Note: <code>x = 10</code> also works, and so does <code>10 -&gt; x</code> — but <code>&lt;-</code> is the convention.'
+    }
+  },
+  {
+    category: 'Lesson 2',
+    title: 'Data Types in R',
+    desc: "R has several fundamental data types. Knowing which type you're working with helps you understand what operations are possible.",
+    content: `<div class="content-block">
+      <h3>The Core Types</h3>
+      <p>R's main data types are: <code>numeric</code> (numbers), <code>character</code> (text strings), <code>logical</code> (TRUE/FALSE), and <code>integer</code>. Use <code>class()</code> to check any variable's type.</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> Logical values <code>TRUE</code> and <code>FALSE</code> must be written in ALL CAPS in R.</div>
+    </div>`,
+    exercises: [
+      { label: 'Explore Data Types', code: `# Numeric\nage <- 25.5\nclass(age)\n\n# Character (string)\nname <- "Taylor"\nclass(name)\n\n# Logical\nis_student <- TRUE\nclass(is_student)`, hint: 'Check the class of each variable' },
+      { label: 'Type Checking & Conversion', code: `# Check if a value is numeric\nis.numeric(3.14)\n\n# Convert a number to a string\nas.character(100)\n\n# Convert a string to a number\nas.numeric("42")`, hint: 'Run and see what each line returns' }
+    ],
+    quiz: {
+      q: 'What does class("Hello World") return in R?',
+      options: ['numeric', 'character', 'logical', 'string'],
+      correctIdx: 1,
+      feedback: 'Correct! Text values in R have class <code>"character"</code> — not "string" like in some other languages.'
+    }
+  },
+  {
+    category: 'Lesson 3',
+    title: 'Vectors',
+    desc: 'Vectors are the fundamental building block of R. Nearly everything in R is a vector — even a single number is a vector of length 1.',
+    content: `<div class="content-block">
+      <h3>Creating Vectors with c()</h3>
+      <p>Use the <code>c()</code> function (short for "combine") to create vectors. All elements must be the same type.</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> Use <code>1:10</code> as a shortcut to create a sequence from 1 to 10. Try it!</div>
+    </div>`,
+    exercises: [
+      { label: 'Create & Index Vectors', code: `# Create a numeric vector\nscores <- c(88, 92, 75, 95, 83)\n\n# Access the 2nd element (R uses 1-based indexing!)\nscores[2]\n\n# Access elements 1 to 3\nscores[1:3]\n\n# How long is the vector?\nlength(scores)`, hint: 'Notice R starts counting from 1, not 0!' },
+      { label: 'Vector Arithmetic', code: `# Vectors support element-wise operations!\na <- c(1, 2, 3, 4, 5)\nb <- c(10, 20, 30, 40, 50)\n\n# Add them\na + b\n\n# Summary statistics\nmean(a)\nsum(b)`, hint: 'R applies operations to every element automatically' }
+    ],
+    quiz: {
+      q: 'In R, what does scores[3] return from the vector c(10, 20, 30, 40, 50)?',
+      options: ['20', '30', '40', 'Error: index out of range'],
+      correctIdx: 1,
+      feedback: 'Correct! R uses 1-based indexing, so index [3] returns the 3rd element, which is 30.'
+    }
+  },
+  {
+    category: 'Lesson 4',
+    title: 'Functions',
+    desc: 'Functions are reusable blocks of code. R comes with hundreds of built-in functions — and you can write your own with ease.',
+    content: `<div class="content-block">
+      <h3>Using &amp; Writing Functions</h3>
+      <p>Call built-in functions like <code>mean()</code>, <code>sqrt()</code>, or <code>nchar()</code>. Define your own with the <code>function</code> keyword.</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> Use <code>?function_name</code> in the R console to get help on any function, e.g. <code>?mean</code>.</div>
+    </div>`,
+    exercises: [
+      { label: 'Built-in Functions', code: `# Math functions\nsqrt(144)\nabs(-7)\nround(3.14159, digits = 2)\n\n# String functions\nnchar("Hello, R!")      # count characters\ntoupper("make me big")  # uppercase`, hint: 'R has a huge standard library!' },
+      { label: 'Write Your Own Function', code: `# Define a function that converts Celsius to Fahrenheit\ncelsius_to_f <- function(celsius) {\n  fahrenheit <- (celsius * 9/5) + 32\n  return(fahrenheit)\n}\n\n# Call it!\ncelsius_to_f(0)    # freezing\ncelsius_to_f(100)  # boiling`, hint: 'Modify the function to convert the other way!' }
+    ],
+    quiz: {
+      q: 'What is the correct way to define a function called "double" that returns x * 2?',
+      options: ['def double(x): return x * 2', 'double <- function(x) { x * 2 }', 'function double(x) { return(x * 2) }', 'double = lambda x: x * 2'],
+      correctIdx: 1,
+      feedback: 'Correct! In R, functions are defined with <code>function(args) { body }</code> and assigned to a name with <code>&lt;-</code>. The last expression is returned automatically.'
+    }
+  },
+  {
+    category: 'Lesson 5',
+    title: 'Data Frames',
+    desc: "Data frames are R's table structure — like a spreadsheet or SQL table. Each column is a vector, and columns can have different types.",
+    content: `<div class="content-block">
+      <h3>Creating &amp; Exploring Data Frames</h3>
+      <p>Use <code>data.frame()</code> to create one from scratch, or load built-in datasets like <code>mtcars</code> and <code>iris</code> that come with R.</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> R comes with many built-in datasets. Type <code>data()</code> to see them all.</div>
+    </div>`,
+    exercises: [
+      { label: 'Create a Data Frame', code: `# Create a data frame\nstudents <- data.frame(\n  name = c("Alice", "Bob", "Carol"),\n  score = c(92, 85, 97),\n  passed = c(TRUE, TRUE, TRUE)\n)\n\n# View it\nstudents\n\n# Access a column with $\nstudents$score`, hint: 'Notice columns can have different types!' },
+      { label: 'Explore a Built-in Dataset', code: `# Load built-in iris dataset\ndata(iris)\n\n# First 6 rows\nhead(iris)\n\n# Summary statistics for every column\nsummary(iris)`, hint: 'The iris dataset is a classic in data science!' }
+    ],
+    quiz: {
+      q: 'How do you access the "score" column from a data frame called "df" in R?',
+      options: ['df["score"]', 'df$score', 'df.score', 'df->score'],
+      correctIdx: 1,
+      feedback: 'Correct! The <code>$</code> operator accesses a column by name in R. You can also use <code>df[["score"]]</code> for the same result.'
+    }
+  },
+  {
+    category: 'Lesson 6',
+    title: 'Visualisation with Base R',
+    desc: "R has powerful built-in plotting capabilities. Let's explore how to create charts with base R — no extra packages needed.",
+    content: `<div class="content-block">
+      <h3>Plotting with plot(), hist(), and barplot()</h3>
+      <p>Base R includes <code>plot()</code> for scatter plots, <code>hist()</code> for histograms, and <code>barplot()</code> for bar charts. Plots will render right here in the browser!</p>
+      <div class="callout"><strong>&#128161; Tip:</strong> For more advanced visualizations, the <code>ggplot2</code> package is the industry standard. It can also run in WebR!</div>
+    </div>`,
+    exercises: [
+      { label: 'Scatter Plot', code: `# Scatter plot using built-in cars dataset\nplot(cars$speed, cars$dist,\n     main = "Car Speed vs Stopping Distance",\n     xlab = "Speed (mph)",\n     ylab = "Distance (ft)",\n     col = "steelblue",\n     pch = 19)`, hint: 'A plot will appear below the code!', isPlot: true },
+      { label: 'Histogram', code: `# Histogram of iris petal lengths\nhist(iris$Petal.Length,\n     main = "Iris Petal Length Distribution",\n     xlab = "Petal Length (cm)",\n     col = "forestgreen",\n     border = "white",\n     breaks = 20)`, hint: 'Try changing the number of breaks!', isPlot: true }
+    ],
+    quiz: {
+      q: 'Which function creates a histogram in base R?',
+      options: ['histogram()', 'hist()', 'barplot()', 'plot(type="hist")'],
+      correctIdx: 1,
+      feedback: 'Correct! <code>hist()</code> is the base R function for histograms. It automatically bins your data into intervals.'
+    }
+  }
+];
+
+let currentLesson = 0;
+const completed = new Set();
+
+function renderLesson(idx) {
+  const L = lessons[idx];
+  const area = document.getElementById('lesson-area');
+  let html = `
+    <div class="lesson-header">
+      <div class="lesson-category">${L.category}</div>
+      <h1>${L.title}</h1>
+      <p class="lesson-desc">${L.desc}</p>
+    </div>
+    ${L.content}
+  `;
+
+  L.exercises.forEach((ex, i) => {
+    html += `
+      <div class="exercise" id="ex-${idx}-${i}">
+        <div class="exercise-header">
+          <span>&#9000;&#65039;</span>
+          <div>
+            <div>${ex.label}</div>
+            <div class="ex-label">Live R Exercise</div>
+          </div>
+        </div>
+        <textarea class="code-input" id="code-${idx}-${i}" spellcheck="false">${ex.code}</textarea>
+        <div class="run-bar">
+          <button class="btn-run" onclick="runCode(${idx},${i},${!!ex.isPlot})">&#9654; Run Code</button>
+          <button class="btn-reset" onclick="resetCode(${idx},${i})">&#8635; Reset</button>
+          <span class="run-hint">Ctrl+Enter to run</span>
+        </div>
+        <div class="output-area" id="out-${idx}-${i}"></div>
+        <div class="output-plot" id="plot-${idx}-${i}"></div>
+      </div>`;
+  });
+
+  const q = L.quiz;
+  html += `
+    <div class="quiz-block">
+      <div class="quiz-q">&#129504; ${q.q}</div>
+      <div class="quiz-options">
+        ${q.options.map((opt, i) => `<div class="quiz-opt" id="qopt-${idx}-${i}" onclick="answerQuiz(${idx},${i})"><code>${['A','B','C','D'][i]}</code> ${opt}</div>`).join('')}
+      </div>
+      <div class="quiz-feedback" id="qfb-${idx}">${q.feedback}</div>
+    </div>`;
+
+  area.innerHTML = html;
+  area.scrollTop = 0;
+
+  document.querySelectorAll('.lesson-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.getElementById('btn-prev').classList.toggle('hidden', idx === 0);
+  document.getElementById('btn-next').textContent = idx === lessons.length - 1 ? '&#127881; Finish' : 'Next Lesson \u2192';
+  document.getElementById('progress-bar').style.width = ((idx + 1) / lessons.length * 100) + '%';
+
+  area.querySelectorAll('textarea').forEach((ta, i) => {
+    ta.addEventListener('keydown', e => {
+      if (e.ctrlKey && e.key === 'Enter') { e.preventDefault(); runCode(idx, i, !!lessons[idx].exercises[i].isPlot); }
+    });
+  });
+}
+
+window.runCode = async function(lessonIdx, exIdx, isPlot) {
+  const code = document.getElementById(`code-${lessonIdx}-${exIdx}`).value;
+  const outEl = document.getElementById(`out-${lessonIdx}-${exIdx}`);
+  const plotEl = document.getElementById(`plot-${lessonIdx}-${exIdx}`);
+
+  if (!webRReady) {
+    outEl.textContent = 'Loading R engine (~5 MB, first run only)...';
+    outEl.className = 'output-area visible loading-out';
+    try {
+      await initWebR();
+    } catch(e) {
+      outEl.textContent = 'Error loading R: ' + e.message;
+      outEl.className = 'output-area visible error-out';
+      return;
+    }
+  }
+
+  outEl.textContent = 'Running...';
+  outEl.className = 'output-area visible loading-out';
+  plotEl.className = 'output-plot';
+  try {
+    if (isPlot) {
+      await webR.evalRVoid(`png_file <- tempfile(fileext=".png"); png(png_file, width=600, height=400, res=96); ${code}; dev.off()`);
+      const pngData = await webR.evalR(`readBin(png_file, "raw", file.info(png_file)$size)`);
+      const arr = await pngData.toArray();
+      const blob = new Blob([new Uint8Array(arr)], { type: 'image/png' });
+      plotEl.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="R plot">`;
+      plotEl.className = 'output-plot visible';
+      outEl.className = 'output-area';
+    } else {
+      const shelter = await new webR.Shelter();
+      try {
+        const captured = await shelter.captureR(code, { withAutoprint: true });
+        const output = captured.output.filter(o => o.type === 'stdout' || o.type === 'stderr').map(o => o.data).join('\n');
+        outEl.textContent = output || '(no output)';
+        outEl.className = 'output-area visible success';
+      } finally { shelter.purge(); }
+    }
+  } catch(e) {
+    outEl.textContent = 'Error: ' + e.message;
+    outEl.className = 'output-area visible error-out';
+  }
+};
+
+window.resetCode = function(lessonIdx, exIdx) {
+  document.getElementById(`code-${lessonIdx}-${exIdx}`).value = lessons[lessonIdx].exercises[exIdx].code;
+  document.getElementById(`out-${lessonIdx}-${exIdx}`).className = 'output-area';
+  document.getElementById(`plot-${lessonIdx}-${exIdx}`).className = 'output-plot';
+};
+
+window.answerQuiz = function(lessonIdx, optIdx) {
+  const q = lessons[lessonIdx].quiz;
+  const opts = document.querySelectorAll(`[id^="qopt-${lessonIdx}-"]`);
+  const fb = document.getElementById(`qfb-${lessonIdx}`);
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  opts[optIdx].classList.add(optIdx === q.correctIdx ? 'correct' : 'wrong');
+  opts[q.correctIdx].classList.add('correct');
+  fb.className = 'quiz-feedback show ' + (optIdx === q.correctIdx ? 'correct' : 'wrong');
+  if (optIdx === q.correctIdx) {
+    completed.add(lessonIdx);
+    document.getElementById(`num-${lessonIdx}`).textContent = '\u2713';
+    document.querySelectorAll('.lesson-btn')[lessonIdx].classList.add('done');
+  }
+};
+
+window.goLesson = function(idx) { currentLesson = idx; renderLesson(idx); };
+
+window.nextLesson = function() {
+  if (currentLesson < lessons.length - 1) { currentLesson++; renderLesson(currentLesson); }
+  else {
+    document.getElementById('lesson-area').innerHTML = `
+      <div style="text-align:center;padding:60px 20px">
+        <div style="font-size:64px;margin-bottom:20px">&#127881;</div>
+        <h1 style="font-family:'Fraunces',serif;font-size:40px;margin-bottom:16px">You did it!</h1>
+        <p style="color:#555;font-size:17px;max-width:480px;margin:0 auto 28px">
+          You've completed all 6 lessons. You now know variables, data types, vectors, functions, data frames, and plotting!
+        </p>
+        <button class="btn-nav primary" onclick="goLesson(0)" style="display:inline-block">Start Over &rarr;</button>
+      </div>`;
+  }
+};
+
+window.prevLesson = function() {
+  if (currentLesson > 0) { currentLesson--; renderLesson(currentLesson); }
+};
+
+renderLesson(0);
+</script>
+</body>
+</html>
