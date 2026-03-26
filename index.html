@@ -1,0 +1,983 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1">&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1">&lt;title&gt;Learn R — Interactive Tutorial&lt;/title&gt;</p>
+<p class="p1">&lt;link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&amp;family=JetBrains+Mono:wght@400;600&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>:root {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--cream: #F7F3EC;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--ink: #1A1612;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--forest: #2D5016;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--sage: #7A9E5A;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--moss: #C8D9B0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--amber: #D4820A;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--amber-light: #FFF0CC;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--red: #C0392B;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--red-light: #FDECEA;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--code-bg: #1E1E1E;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--code-fg: #D4D4D4;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>--border: #DDD5C8;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>* { box-sizing: border-box; margin: 0; padding: 0; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>body {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--ink);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 100vh;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: grid;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grid-template-columns: 280px 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grid-template-rows: auto 1fr;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* HEADER */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>grid-column: 1 / -1;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 18px 36px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-bottom: 4px solid var(--sage);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.logo {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Fraunces', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: -0.5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.logo span { color: var(--moss); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.tagline {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.05em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-left: auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* WEBR STATUS */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#webr-status {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: rgba(255,255,255,0.08);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 6px 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid rgba(255,255,255,0.15);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 8px; height: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #888;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.4s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot.loading { background: var(--amber); animation: pulse 1s infinite; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot.ready { background: var(--sage); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.status-dot.error { background: var(--red); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes pulse { 0%,100% { opacity:1 } 50% { opacity:0.4 } }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* SIDEBAR */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>aside {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-right: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 28px 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.sidebar-label {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.12em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #999;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 0 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: left;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--ink);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.15s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn:hover { background: var(--cream); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn.active {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn.active::before {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: absolute;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>left: 0; top: 0; bottom: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 3px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-num {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 24px; height: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 50%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 600;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex; align-items: center; justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-shrink: 0;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn.active .lesson-num { background: var(--forest); color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-btn.done .lesson-num { background: var(--sage); color: #fff; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-title { line-height: 1.3; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-sub { font-size: 11px; color: #999; font-weight: 300; display: block; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* MAIN */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>main {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-area {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex: 1;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow-y: auto;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 40px 48px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-width: 860px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>animation: fadeUp 0.4s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes fadeUp {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>from { opacity:0; transform: translateY(10px); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>to { opacity:1; transform: translateY(0); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-category {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 11px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.12em;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-transform: uppercase;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--sage);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>h1 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Fraunces', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 36px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.15;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--ink);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.lesson-desc {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #555;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 300;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>max-width: 640px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* CONTENT BLOCKS */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.content-block {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>animation: fadeUp 0.4s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.content-block p {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 15px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.8;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #333;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.callout {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--amber-light);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-left: 4px solid var(--amber);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 0 8px 8px 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #5a4000;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.callout strong { color: var(--amber); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* CODE EXERCISE */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.exercise {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>box-shadow: 0 2px 12px rgba(0,0,0,0.06);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>animation: fadeUp 0.4s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.exercise-header {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 18px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.ex-icon { font-size: 16px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.exercise-header .ex-label { color: var(--moss); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.code-editor-wrap {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>textarea.code-input {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 120px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--code-bg);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--code-fg);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'JetBrains Mono', monospace;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13.5px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 18px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>resize: vertical;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>outline: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>tab-size: 2;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>letter-spacing: 0.01em;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.run-bar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #252526;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 10px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-top: 1px solid #333;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-run {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--sage);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 8px 22px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 7px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: background 0.2s, transform 0.1s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-run:hover { background: var(--forest); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-run:active { transform: scale(0.97); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-run:disabled { opacity: 0.5; cursor: not-allowed; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-reset {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid #444;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #888;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 7px 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-reset:hover { border-color: #888; color: #ccc; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.run-hint { color: #555; font-size: 11px; margin-left: auto; font-family: 'JetBrains Mono', monospace; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* OUTPUT */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-area {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-top: 1px solid #333;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #1a1a1a;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>min-height: 60px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 14px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'JetBrains Mono', monospace;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>line-height: 1.7;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: #aaa;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>white-space: pre-wrap;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>word-break: break-word;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-area.visible { display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-area.success { color: #89d185; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-area.error-out { color: #f48771; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-area.loading-out { color: #888; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-plot {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-top: 1px solid #333;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>text-align: center;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-plot.visible { display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.output-plot img { max-width: 100%; border-radius: 6px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* QUIZ */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-block {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 28px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>animation: fadeUp 0.4s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-q {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Fraunces', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 17px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--ink);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-options { display: flex; flex-direction: column; gap: 10px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-opt {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 12px 16px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 1.5px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'JetBrains Mono', monospace;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-opt:hover { border-color: var(--sage); background: var(--moss); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-opt.correct { border-color: var(--sage); background: #e8f5e9; color: var(--forest); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-feedback {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-top: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 10px 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: none;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-feedback.show { display: block; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-feedback.correct { background: #e8f5e9; color: var(--forest); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.quiz-feedback.wrong { background: var(--red-light); color: var(--red); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* PROGRESS */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.progress-bar-wrap {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: relative;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.progress-bar-fill {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: width 0.5s ease;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* NAV BUTTONS */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.nav-buttons {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 20px 48px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 12px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-top: 1px solid var(--border);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: #fff;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-nav {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 10px 24px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 8px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'DM Sans', sans-serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 14px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 500;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>cursor: pointer;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: all 0.2s;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border: 2px solid var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-nav.primary { background: var(--forest); color: #fff; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-nav.primary:hover { background: #1e3a0a; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-nav.secondary { background: transparent; color: var(--forest); }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.btn-nav.secondary:hover { background: var(--moss); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.hidden { display: none; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>/* Loading overlay */</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#loading-overlay {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>position: fixed; inset: 0;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--cream);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>display: flex;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>flex-direction: column;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>align-items: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>justify-content: center;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>z-index: 999;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>gap: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>transition: opacity 0.5s;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>#loading-overlay.fade-out { opacity: 0; pointer-events: none; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-logo {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Fraunces', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 48px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-weight: 700;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-logo span { color: var(--sage); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-bar {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 240px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>overflow: hidden;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-bar-fill {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>height: 100%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>width: 0%;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>animation: loadFill 8s ease forwards;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>@keyframes loadFill { to { width: 90%; } }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>.loading-msg {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 13px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--sage);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'JetBrains Mono', monospace;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>code {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'JetBrains Mono', monospace;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>background: var(--moss);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--forest);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>padding: 2px 6px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>border-radius: 4px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 0.88em;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>h3 {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-family: 'Fraunces', serif;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>font-size: 20px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>margin-bottom: 10px;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>color: var(--ink);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">&lt;/style&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Loading overlay --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div id="loading-overlay"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="loading-logo"&gt;Learn&lt;span&gt;R&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="loading-bar"&gt;&lt;div class="loading-bar-fill"&gt;&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="loading-msg" id="load-msg"&gt;Initializing WebR engine...&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Header --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;header&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="logo"&gt;Learn&lt;span&gt;R&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="tagline"&gt;Interactive R Tutorial — Powered by WebR&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="webr-status"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="status-dot loading" id="status-dot"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;span id="status-text"&gt;Loading R...&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/header&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Progress bar --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;div class="progress-bar-wrap" style="grid-column:1/-1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="progress-bar-fill" id="progress-bar" style="width:16.6%"&gt;&lt;/div&gt;</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Sidebar --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;aside&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="sidebar-label"&gt;Lessons&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn active" onclick="goLesson(0)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-0"&gt;1&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Getting Started&lt;span class="lesson-sub"&gt;Variables &amp; assignment&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn" onclick="goLesson(1)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-1"&gt;2&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Data Types&lt;span class="lesson-sub"&gt;Numbers, strings, logicals&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn" onclick="goLesson(2)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-2"&gt;3&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Vectors&lt;span class="lesson-sub"&gt;Creating &amp; indexing&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn" onclick="goLesson(3)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-3"&gt;4&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Functions&lt;span class="lesson-sub"&gt;Built-in &amp; custom&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn" onclick="goLesson(4)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-4"&gt;5&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Data Frames&lt;span class="lesson-sub"&gt;Tabular data&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;button class="lesson-btn" onclick="goLesson(5)"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-num" id="num-5"&gt;6&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-title"&gt;Visualisation&lt;span class="lesson-sub"&gt;Plotting with base R&lt;/span&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/button&gt;</p>
+<p class="p1">&lt;/aside&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;!-- Main --&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;main&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="lesson-area" id="lesson-area"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Lesson content injected by JS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="nav-buttons"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-nav secondary" id="btn-prev" onclick="prevLesson()"&gt;← Previous&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="btn-nav primary" id="btn-next" onclick="nextLesson()"&gt;Next Lesson →&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">&lt;/main&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script type="module"&gt;</p>
+<p class="p1">// ─── WebR Setup ───────────────────────────────────────────────</p>
+<p class="p1">import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';</p>
+<p class="p2"><br></p>
+<p class="p1">const webR = new WebR();</p>
+<p class="p1">let webRReady = false;</p>
+<p class="p2"><br></p>
+<p class="p1">const statusDot = document.getElementById('status-dot');</p>
+<p class="p1">const statusText = document.getElementById('status-text');</p>
+<p class="p1">const loadMsg = document.getElementById('load-msg');</p>
+<p class="p2"><br></p>
+<p class="p1">(async () =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>loadMsg.textContent = 'Downloading WebR (~5 MB)...';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>await webR.init();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>webRReady = true;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>statusDot.className = 'status-dot ready';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>statusText.textContent = 'R is ready';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>loadMsg.textContent = 'R engine ready!';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>setTimeout(() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const ol = document.getElementById('loading-overlay');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>ol.classList.add('fade-out');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>setTimeout(() =&gt; ol.remove(), 500);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}, 600);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} catch(e) {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>statusDot.className = 'status-dot error';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>statusText.textContent = 'R failed to load';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>loadMsg.textContent = 'Error: ' + e.message;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">})();</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Lesson Data ──────────────────────────────────────────────</p>
+<p class="p1">const lessons = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 1',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Getting Started with R',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'R is a powerful language for statistical computing and data analysis. Let\'s begin with the most fundamental concept: storing values in variables.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;In R, you assign values to variables using the &lt;code&gt;&amp;lt;-&lt;/code&gt; operator (or &lt;code&gt;=&lt;/code&gt;). Think of a variable as a labelled box that stores a value.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; The shortcut &lt;code&gt;Alt + -&lt;/code&gt; types &lt;code&gt;&amp;lt;-&lt;/code&gt; in RStudio. For now, just type it out!&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Try running the code below — it assigns the number &lt;code&gt;42&lt;/code&gt; to a variable called &lt;code&gt;my_number&lt;/code&gt;, then prints it.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Try it — Variable Assignment',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Assign a value to a variable\nmy_number &lt;- 42\n\n# Print the variable\nmy_number`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Run this code and see the output!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Your Turn — Create Your Own',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Create a variable called "my_name" with your name as a string\n# Strings are wrapped in quotes\nmy_name &lt;- "Alice"\n\n# Print it\nmy_name`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Change "Alice" to your own name!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'Which of these correctly assigns the value 10 to a variable x in R?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: ['x == 10', 'x &lt;- 10', '10 -&gt; x (wait, is this valid?)', 'x = 10 (this also works!)'],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correct: [1, 3],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! &lt;code&gt;x &lt;- 10&lt;/code&gt; is the standard R assignment. Note: &lt;code&gt;x = 10&lt;/code&gt; also works, and so does &lt;code&gt;10 -&gt; x&lt;/code&gt; (right-assignment) — but &lt;code&gt;&amp;lt;-&lt;/code&gt; is convention.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 2',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Data Types in R',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'R has several fundamental data types. Knowing which type you\'re working with helps you understand what operations are possible.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;The Core Types&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;R's main data types are: &lt;code&gt;numeric&lt;/code&gt; (numbers), &lt;code&gt;character&lt;/code&gt; (text strings), &lt;code&gt;logical&lt;/code&gt; (TRUE/FALSE), and &lt;code&gt;integer&lt;/code&gt;. Use &lt;code&gt;class()&lt;/code&gt; to check any variable's type.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; Logical values &lt;code&gt;TRUE&lt;/code&gt; and &lt;code&gt;FALSE&lt;/code&gt; must be written in ALL CAPS in R.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Explore Data Types',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Numeric\nage &lt;- 25.5\nclass(age)\n\n# Character (string)\nname &lt;- "Taylor"\nclass(name)\n\n# Logical\nis_student &lt;- TRUE\nclass(is_student)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Check the class of each variable'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Type Checking &amp; Conversion',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Check if a value is numeric\nis.numeric(3.14)\n\n# Convert a number to a string\nas.character(100)\n\n# Convert a string to a number\nas.numeric("42")`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Run and see what each line returns'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'What does class("Hello World") return in R?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: ['numeric', 'character', 'logical', 'string'],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! Text values in R have class &lt;code&gt;"character"&lt;/code&gt; — not "string" like in some other languages.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 3',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Vectors',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'Vectors are the fundamental building block of R. Nearly everything in R is a vector — even a single number is a vector of length 1.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Creating Vectors with c()&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Use the &lt;code&gt;c()&lt;/code&gt; function (short for "combine") to create vectors. All elements must be the same type.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; Use &lt;code&gt;1:10&lt;/code&gt; as a shortcut to create a sequence from 1 to 10. Try it!&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Create &amp; Index Vectors',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Create a numeric vector\nscores &lt;- c(88, 92, 75, 95, 83)\n\n# Access the 2nd element (R uses 1-based indexing!)\nscores[2]\n\n# Access elements 1 to 3\nscores[1:3]\n\n# How long is the vector?\nlength(scores)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Notice R starts counting from 1, not 0!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Vector Arithmetic',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Vectors support element-wise operations!\na &lt;- c(1, 2, 3, 4, 5)\nb &lt;- c(10, 20, 30, 40, 50)\n\n# Add them\na + b\n\n# Summary statistics\nmean(a)\nsum(b)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'R applies operations to every element automatically'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'In R, what does scores[3] return from the vector c(10, 20, 30, 40, 50)?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: ['20', '30', '40', 'Error: index out of range'],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! R uses 1-based indexing, so index [3] returns the 3rd element, which is 30.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 4',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Functions',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'Functions are reusable blocks of code. R comes with hundreds of built-in functions — and you can write your own with ease.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Using &amp; Writing Functions&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Call built-in functions like &lt;code&gt;mean()&lt;/code&gt;, &lt;code&gt;sqrt()&lt;/code&gt;, or &lt;code&gt;nchar()&lt;/code&gt;. Define your own with the &lt;code&gt;function&lt;/code&gt; keyword.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; Use &lt;code&gt;?function_name&lt;/code&gt; in the R console to get help on any function, e.g. &lt;code&gt;?mean&lt;/code&gt;.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Built-in Functions',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Math functions\nsqrt(144)\nabs(-7)\nround(3.14159, digits = 2)\n\n# String functions\nnchar("Hello, R!") <span class="Apple-converted-space">      </span># count characters\ntoupper("make me big") <span class="Apple-converted-space">  </span># uppercase`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'R has a huge standard library!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Write Your Own Function',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Define a function that converts Celsius to Fahrenheit\ncelsius_to_f &lt;- function(celsius) {\n<span class="Apple-converted-space">  </span>fahrenheit &lt;- (celsius * 9/5) + 32\n<span class="Apple-converted-space">  </span>return(fahrenheit)\n}\n\n# Call it!\ncelsius_to_f(0)<span class="Apple-converted-space">    </span># freezing\ncelsius_to_f(100)<span class="Apple-converted-space">  </span># boiling`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Modify the function to convert the other way!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'What is the correct way to define a function called "double" that returns x * 2?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: [</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'def double(x): return x * 2',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'double &lt;- function(x) { x * 2 }',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'function double(x) { return(x * 2) }',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>'double = lambda x: x * 2'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! In R, functions are defined with &lt;code&gt;function(args) { body }&lt;/code&gt; and assigned to a name with &lt;code&gt;&amp;lt;-&lt;/code&gt;. The last expression is returned automatically.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 5',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Data Frames',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'Data frames are R\'s table structure — like a spreadsheet or SQL table. Each column is a vector, and columns can have different types.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Creating &amp; Exploring Data Frames&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Use &lt;code&gt;data.frame()&lt;/code&gt; to create one from scratch, or load built-in datasets like &lt;code&gt;mtcars&lt;/code&gt; and &lt;code&gt;iris&lt;/code&gt; that come with R.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; R comes with many built-in datasets. Type &lt;code&gt;data()&lt;/code&gt; to see them all.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Create a Data Frame',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Create a data frame\nstudents &lt;- data.frame(\n<span class="Apple-converted-space">  </span>name = c("Alice", "Bob", "Carol"),\n<span class="Apple-converted-space">  </span>score = c(92, 85, 97),\n<span class="Apple-converted-space">  </span>passed = c(TRUE, TRUE, TRUE)\n)\n\n# View it\nstudents\n\n# Access a column with $\nstudents$score`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Notice columns can have different types!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Explore a Built-in Dataset',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Load built-in iris dataset\ndata(iris)\n\n# First 6 rows\nhead(iris)\n\n# Summary statistics for every column\nsummary(iris)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'The iris dataset is a classic in data science!'</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'How do you access the "score" column from a data frame called "df" in R?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: ['df["score"]', 'df$score', 'df.score', 'df-&gt;score'],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! The &lt;code&gt;$&lt;/code&gt; operator accesses a column by name in R. You can also use &lt;code&gt;df[["score"]]&lt;/code&gt; for the same result.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{</p>
+<p class="p1"><span class="Apple-converted-space">    </span>category: 'Lesson 6',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>title: 'Visualisation with Base R',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>desc: 'R has powerful built-in plotting capabilities. Let\'s explore how to create charts with base R — no extra packages needed.',</p>
+<p class="p1"><span class="Apple-converted-space">    </span>content: `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="content-block"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;h3&gt;Plotting with plot(), hist(), and barplot()&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;p&gt;Base R includes &lt;code&gt;plot()&lt;/code&gt; for scatter plots, &lt;code&gt;hist()&lt;/code&gt; for histograms, and &lt;code&gt;barplot()&lt;/code&gt; for bar charts. Plots will render right here in the browser!&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="callout"&gt;&lt;strong&gt;💡 Tip:&lt;/strong&gt; For more advanced visualizations, the &lt;code&gt;ggplot2&lt;/code&gt; package is the industry standard. It can also run in WebR!&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>`,</p>
+<p class="p1"><span class="Apple-converted-space">    </span>exercises: [</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Scatter Plot',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Scatter plot using built-in cars dataset\nplot(cars$speed, cars$dist,\n <span class="Apple-converted-space">    </span>main = "Car Speed vs Stopping Distance",\n <span class="Apple-converted-space">    </span>xlab = "Speed (mph)",\n <span class="Apple-converted-space">    </span>ylab = "Distance (ft)",\n <span class="Apple-converted-space">    </span>col = "steelblue",\n <span class="Apple-converted-space">    </span>pch = 19)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'A plot will appear below the code!',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>isPlot: true</p>
+<p class="p1"><span class="Apple-converted-space">      </span>},</p>
+<p class="p1"><span class="Apple-converted-space">      </span>{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>label: 'Histogram',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>code: `# Histogram of iris petal lengths\nhist(iris$Petal.Length,\n <span class="Apple-converted-space">    </span>main = "Iris Petal Length Distribution",\n <span class="Apple-converted-space">    </span>xlab = "Petal Length (cm)",\n <span class="Apple-converted-space">    </span>col = "forestgreen",\n <span class="Apple-converted-space">    </span>border = "white",\n <span class="Apple-converted-space">    </span>breaks = 20)`,</p>
+<p class="p1"><span class="Apple-converted-space">        </span>hint: 'Try changing the number of breaks!',</p>
+<p class="p1"><span class="Apple-converted-space">        </span>isPlot: true</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>],</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quiz: {</p>
+<p class="p1"><span class="Apple-converted-space">      </span>q: 'Which function creates a histogram in base R?',</p>
+<p class="p1"><span class="Apple-converted-space">      </span>options: ['histogram()', 'hist()', 'barplot()', 'plot(type="hist")'],</p>
+<p class="p1"><span class="Apple-converted-space">      </span>correctIdx: 1,</p>
+<p class="p1"><span class="Apple-converted-space">      </span>feedback: 'Correct! &lt;code&gt;hist()&lt;/code&gt; is the base R function for histograms. It automatically bins your data into intervals.'</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── State ────────────────────────────────────────────────────</p>
+<p class="p1">let currentLesson = 0;</p>
+<p class="p1">let completed = new Set();</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Render Lesson ────────────────────────────────────────────</p>
+<p class="p1">function renderLesson(idx) {</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const L = lessons[idx];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const area = document.getElementById('lesson-area');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="lesson-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="lesson-category"&gt;${L.category}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;${L.title}&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p class="lesson-desc"&gt;${L.desc}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>${L.content}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>L.exercises.forEach((ex, i) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="exercise" id="ex-${idx}-${i}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="exercise-header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;span class="ex-icon"&gt;⌨️&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;${ex.label}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="ex-label"&gt;Live R Exercise&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="code-editor-wrap"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;textarea class="code-input" id="code-${idx}-${i}" spellcheck="false"&gt;${ex.code}&lt;/textarea&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">```</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="run-bar"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn-run" onclick="runCode(${idx}, ${i}, ${ex.isPlot || false})"&gt;▶ Run Code&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn-reset" onclick="resetCode(${idx}, ${i})"&gt;↺ Reset&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;span class="run-hint"&gt;Ctrl+Enter to run&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="output-area" id="out-${idx}-${i}"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="output-plot" id="plot-${idx}-${i}"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p1">`;</p>
+<p class="p1">```</p>
+<p class="p2"><br></p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Quiz</p>
+<p class="p1">const q = L.quiz;</p>
+<p class="p1">html += `&lt;div class="quiz-block"&gt; &lt;div class="quiz-q"&gt;🧠 ${q.q}&lt;/div&gt; &lt;div class="quiz-options"&gt; ${q.options.map((opt, i) =&gt;`</p>
+<p class="p1">&lt;div class="quiz-opt" id="qopt-${idx}-${i}" onclick="answerQuiz(${idx}, ${i})"&gt;</p>
+<p class="p1">&lt;code&gt;${[‘A’, ‘B’, ‘C’, ‘D’][i]}&lt;/code&gt; ${opt}</p>
+<p class="p1">&lt;/div&gt;</p>
+<p class="p1">`).join('')} &lt;/div&gt; &lt;div class="quiz-feedback" id="qfb-${idx}"&gt;${q.feedback}&lt;/div&gt; &lt;/div&gt; `;</p>
+<p class="p2"><br></p>
+<p class="p1">area.innerHTML = html;</p>
+<p class="p1">area.scrollTop = 0;</p>
+<p class="p2"><br></p>
+<p class="p1">// Sidebar active</p>
+<p class="p1">document.querySelectorAll(’.lesson-btn’).forEach((b, i) =&gt; {</p>
+<p class="p1">b.classList.toggle(‘active’, i === idx);</p>
+<p class="p1">});</p>
+<p class="p2"><br></p>
+<p class="p1">// Nav buttons</p>
+<p class="p1">document.getElementById(‘btn-prev’).classList.toggle(‘hidden’, idx === 0);</p>
+<p class="p1">document.getElementById(‘btn-next’).textContent = idx === lessons.length - 1 ? ‘🎉 Finish’ : ‘Next Lesson →’;</p>
+<p class="p2"><br></p>
+<p class="p1">// Progress</p>
+<p class="p1">const pct = ((idx + 1) / lessons.length) * 100;</p>
+<p class="p1">document.getElementById(‘progress-bar’).style.width = pct + ‘%’;</p>
+<p class="p2"><br></p>
+<p class="p1">// Keyboard shortcut</p>
+<p class="p1">area.querySelectorAll(‘textarea’).forEach((ta, i) =&gt; {</p>
+<p class="p1">ta.addEventListener(‘keydown’, e =&gt; {</p>
+<p class="p1">if (e.ctrlKey &amp;&amp; e.key === ‘Enter’) {</p>
+<p class="p1">e.preventDefault();</p>
+<p class="p1">runCode(idx, i, lessons[idx].exercises[i].isPlot || false);</p>
+<p class="p1">}</p>
+<p class="p1">});</p>
+<p class="p1">});</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Run Code ─────────────────────────────────────────────────</p>
+<p class="p1">window.runCode = async function(lessonIdx, exIdx, isPlot) {</p>
+<p class="p1">const code = document.getElementById(`code-${lessonIdx}-${exIdx}`).value;</p>
+<p class="p1">const outEl = document.getElementById(`out-${lessonIdx}-${exIdx}`);</p>
+<p class="p1">const plotEl = document.getElementById(`plot-${lessonIdx}-${exIdx}`);</p>
+<p class="p2"><br></p>
+<p class="p1">if (!webRReady) {</p>
+<p class="p1">outEl.textContent = ‘⏳ WebR is still loading. Please wait a moment…’;</p>
+<p class="p1">outEl.className = ‘output-area visible loading-out’;</p>
+<p class="p1">return;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">outEl.textContent = ‘⏳ Running…’;</p>
+<p class="p1">outEl.className = ‘output-area visible loading-out’;</p>
+<p class="p1">plotEl.className = ‘output-plot’;</p>
+<p class="p2"><br></p>
+<p class="p1">try {</p>
+<p class="p1">let result;</p>
+<p class="p1">if (isPlot) {</p>
+<p class="p1">// Capture plot as PNG</p>
+<p class="p1">await webR.evalRVoid(`png_file &lt;- tempfile(fileext=".png") png(png_file, width=600, height=400, res=96) ${code} dev.off()`);</p>
+<p class="p1">const pngData = await webR.evalR(`readBin(png_file, "raw", file.info(png_file)$size)`);</p>
+<p class="p1">const arr = await pngData.toArray();</p>
+<p class="p1">const uint8 = new Uint8Array(arr);</p>
+<p class="p1">const blob = new Blob([uint8], { type: ‘image/png’ });</p>
+<p class="p1">const url = URL.createObjectURL(blob);</p>
+<p class="p1">plotEl.innerHTML = `&lt;img src="${url}" alt="R plot"&gt;`;</p>
+<p class="p1">plotEl.className = ‘output-plot visible’;</p>
+<p class="p1">outEl.className = ‘output-area’;</p>
+<p class="p1">} else {</p>
+<p class="p1">// Capture text output</p>
+<p class="p1">const shelter = await new webR.Shelter();</p>
+<p class="p1">try {</p>
+<p class="p1">const captured = await shelter.captureR(code, { withAutoprint: true });</p>
+<p class="p1">const output = captured.output</p>
+<p class="p1">.filter(o =&gt; o.type === ‘stdout’ || o.type === ‘stderr’)</p>
+<p class="p1">.map(o =&gt; o.data)</p>
+<p class="p1">.join(’\n’);</p>
+<p class="p1">outEl.textContent = output || ‘(no output)’;</p>
+<p class="p1">outEl.className = ‘output-area visible success’;</p>
+<p class="p1">} finally {</p>
+<p class="p1">shelter.purge();</p>
+<p class="p1">}</p>
+<p class="p1">}</p>
+<p class="p1">} catch(e) {</p>
+<p class="p1">outEl.textContent = ’❌ Error: ’ + e.message;</p>
+<p class="p1">outEl.className = ‘output-area visible error-out’;</p>
+<p class="p1">}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Reset Code ───────────────────────────────────────────────</p>
+<p class="p1">window.resetCode = function(lessonIdx, exIdx) {</p>
+<p class="p1">document.getElementById(`code-${lessonIdx}-${exIdx}`).value = lessons[lessonIdx].exercises[exIdx].code;</p>
+<p class="p1">document.getElementById(`out-${lessonIdx}-${exIdx}`).className = ‘output-area’;</p>
+<p class="p1">document.getElementById(`plot-${lessonIdx}-${exIdx}`).className = ‘output-plot’;</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Quiz ─────────────────────────────────────────────────────</p>
+<p class="p1">window.answerQuiz = function(lessonIdx, optIdx) {</p>
+<p class="p1">const q = lessons[lessonIdx].quiz;</p>
+<p class="p1">const opts = document.querySelectorAll(`[id^="qopt-${lessonIdx}-"]`);</p>
+<p class="p1">const fb = document.getElementById(`qfb-${lessonIdx}`);</p>
+<p class="p1">opts.forEach(o =&gt; o.style.pointerEvents = ‘none’);</p>
+<p class="p1">opts[optIdx].classList.add(optIdx === q.correctIdx ? ‘correct’ : ‘wrong’);</p>
+<p class="p1">opts[q.correctIdx].classList.add(‘correct’);</p>
+<p class="p1">fb.className = ‘quiz-feedback show ’ + (optIdx === q.correctIdx ? ‘correct’ : ‘wrong’);</p>
+<p class="p1">if (optIdx === q.correctIdx) {</p>
+<p class="p1">completed.add(lessonIdx);</p>
+<p class="p1">document.getElementById(`num-${lessonIdx}`).textContent = ‘✓’;</p>
+<p class="p1">document.querySelectorAll(’.lesson-btn’)[lessonIdx].classList.add(‘done’);</p>
+<p class="p1">}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Navigation ───────────────────────────────────────────────</p>
+<p class="p1">window.goLesson = function(idx) {</p>
+<p class="p1">currentLesson = idx;</p>
+<p class="p1">renderLesson(idx);</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">window.nextLesson = function() {</p>
+<p class="p1">if (currentLesson &lt; lessons.length - 1) {</p>
+<p class="p1">currentLesson++;</p>
+<p class="p1">renderLesson(currentLesson);</p>
+<p class="p1">} else {</p>
+<p class="p1">document.getElementById(‘lesson-area’).innerHTML = `&lt;div style="text-align:center;padding:60px 20px"&gt; &lt;div style="font-size:64px;margin-bottom:20px"&gt;🎉&lt;/div&gt; &lt;h1 style="font-family:'Fraunces',serif;font-size:40px;margin-bottom:16px"&gt;You did it!&lt;/h1&gt; &lt;p style="color:#555;font-size:17px;max-width:480px;margin:0 auto 28px"&gt; You've completed all 6 lessons of the Interactive R Tutorial.<span class="Apple-converted-space">  </span>You now know variables, data types, vectors, functions, data frames, and plotting! &lt;/p&gt; &lt;button class="btn-nav primary" onclick="goLesson(0)" style="margin:auto"&gt;Start Over →&lt;/button&gt; &lt;/div&gt;`;</p>
+<p class="p1">}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">window.prevLesson = function() {</p>
+<p class="p1">if (currentLesson &gt; 0) {</p>
+<p class="p1">currentLesson–;</p>
+<p class="p1">renderLesson(currentLesson);</p>
+<p class="p1">}</p>
+<p class="p1">};</p>
+<p class="p2"><br></p>
+<p class="p1">// ─── Init ─────────────────────────────────────────────────────</p>
+<p class="p1">renderLesson(0);</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
