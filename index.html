@@ -148,7 +148,7 @@
 </header>
 
 <div class="progress-bar-wrap">
-  <div class="progress-bar-fill" id="progress-bar" style="width:16.6%"></div>
+  <div class="progress-bar-fill" id="progress-bar" style="width:14.2%"></div>
 </div>
 
 <aside>
@@ -176,6 +176,10 @@
   <button class="lesson-btn" onclick="goLesson(5)">
     <div class="lesson-num" id="num-5">6</div>
     <div class="lesson-title">Visualisation<span class="lesson-sub">Plotting with base R</span></div>
+  </button>
+  <button class="lesson-btn" onclick="goLesson(6)">
+    <div class="lesson-num" id="num-6">7</div>
+    <div class="lesson-title">ggplot2<span class="lesson-sub">Advanced Visualization</span></div>
   </button>
 </aside>
 
@@ -205,7 +209,11 @@ function initWebR() {
   statusDot.className = 'status-dot loading';
   statusText.textContent = 'Loading R...';
   webR = new WebR();
-  webRInitPromise = webR.init().then(() => {
+  
+  // This section was updated to download ggplot2 automatically
+  webRInitPromise = webR.init().then(async () => {
+    statusText.textContent = 'Installing packages (takes a moment)...';
+    await webR.installPackages(['ggplot2']);
     webRReady = true;
     webRLoading = false;
     statusDot.className = 'status-dot ready';
@@ -337,6 +345,30 @@ const lessons = [
       options: ['histogram()', 'hist()', 'barplot()', 'plot(type="hist")'],
       correctIdx: 1,
       feedback: 'Correct! <code>hist()</code> is the base R function for histograms. It automatically bins your data into intervals.'
+    }
+  },
+  {
+    category: 'Lesson 7',
+    title: 'Advanced Visualisation with ggplot2',
+    desc: "While base R is great, ggplot2 is the industry standard for data visualization. It uses a 'Grammar of Graphics' to build plots layer by layer.",
+    content: `<div class="content-block">
+      <h3>Building Layers</h3>
+      <p>Every ggplot starts with <code>ggplot(data, aes(x, y))</code>, and then you add layers using the <code>+</code> symbol, like <code>geom_point()</code>.</p>
+      <div class="callout"><strong>&#128161; Crucial Tip:</strong> Because of how this web environment captures graphics, you must explicitly wrap your final ggplot in the <code>print()</code> command to make it appear on screen!</div>
+    </div>`,
+    exercises: [
+      { 
+        label: 'Your First ggplot', 
+        code: `library(ggplot2)\n\n# Create the plot\nmy_plot <- ggplot(mtcars, aes(x = wt, y = mpg)) +\n  geom_point(color = "darkred", size = 3) +\n  theme_minimal() +\n  labs(title = "Car Weight vs MPG")\n\n# Print it to the screen\nprint(my_plot)`, 
+        hint: 'Make sure you keep the print() function at the end!', 
+        isPlot: true 
+      }
+    ],
+    quiz: {
+      q: 'In ggplot2, what symbol is used to add new layers (like geom_point) to a plot?',
+      options: ['%>%', '&', '+', 'add()'],
+      correctIdx: 2,
+      feedback: 'Correct! You use the <code>+</code> symbol to add layers, scales, and themes to a ggplot.'
     }
   }
 ];
@@ -477,7 +509,7 @@ window.nextLesson = function() {
         <div style="font-size:64px;margin-bottom:20px">&#127881;</div>
         <h1 style="font-family:'Fraunces',serif;font-size:40px;margin-bottom:16px">You did it!</h1>
         <p style="color:#555;font-size:17px;max-width:480px;margin:0 auto 28px">
-          You've completed all 6 lessons. You now know variables, data types, vectors, functions, data frames, and plotting!
+          You've completed all the modules!
         </p>
         <button class="btn-nav primary" onclick="goLesson(0)" style="display:inline-block">Start Over &rarr;</button>
       </div>`;
