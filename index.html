@@ -29,4 +29,382 @@
   .progress-bar-wrap { grid-column: 1 / -1; background: var(--moss); height: 4px; }
   .progress-bar-fill { height: 100%; background: var(--forest); transition: width 0.5s ease; }
   aside { background: #fff; border-right: 1px solid var(--border); padding: 28px 0; overflow-y: auto; }
-  .sidebar-label { font-size: 10px; font-weight: 500; letter-spacing
+  .sidebar-label { font-size: 10px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #999; padding: 0 24px; margin-bottom: 12px; }
+  .lesson-btn { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 24px; background: none; border: none; cursor: pointer; text-align: left; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); transition: background 0.15s; position: relative; }
+  .lesson-btn:hover { background: var(--cream); }
+  .lesson-btn.active { background: var(--cream); color: var(--forest); font-weight: 500; }
+  .lesson-btn.active::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--forest); }
+  .lesson-num { width: 24px; height: 24px; border-radius: 50%; background: var(--moss); color: var(--forest); font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .lesson-btn.active .lesson-num { background: var(--forest); color: #fff; }
+  .lesson-btn.done .lesson-num { background: var(--sage); color: #fff; }
+  .lesson-title { line-height: 1.3; }
+  .lesson-sub { font-size: 11px; color: #999; font-weight: 300; display: block; }
+  main { display: flex; flex-direction: column; overflow: hidden; }
+  .lesson-area { flex: 1; overflow-y: auto; padding: 40px 48px; max-width: 860px; }
+  .lesson-header { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(10px); } to { opacity:1; transform: translateY(0); } }
+  .lesson-category { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 6px; }
+  h1 { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 12px; }
+  .lesson-desc { font-size: 16px; color: #555; line-height: 1.7; font-weight: 300; max-width: 640px; }
+  .content-block { margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  .content-block p { font-size: 15px; line-height: 1.8; color: #333; margin-bottom: 12px; }
+  .callout { background: var(--amber-light); border-left: 4px solid var(--amber); padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 14px; color: #5a4000; margin-bottom: 20px; }
+  .callout strong { color: var(--amber); }
+  .exercise { background: #fff; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); animation: fadeUp 0.4s ease; }
+  .exercise-header { background: var(--forest); color: #fff; padding: 12px 18px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 500; }
+  .ex-label { color: var(--moss); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  
+  /* New dynamic editor styling */
+  .code-editor-container { width: 100%; min-height: 200px; border-radius: 4px; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  
+  .run-bar { background: #1a1a1a; padding: 10px 16px; display: flex; align-items: center; gap: 10px; border-top: 1px solid #333; }
+  .btn-run { background: var(--sage); color: #fff; border: none; padding: 8px 22px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.2s, transform 0.1s; }
+  .btn-run:hover { background: var(--forest); }
+  .btn-run:active { transform: scale(0.97); }
+  .btn-run:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-reset { background: none; border: 1px solid #444; color: #888; padding: 7px 14px; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 12px; cursor: pointer; transition: all 0.2s; }
+  .btn-reset:hover { border-color: #888; color: #ccc; }
+  .run-hint { color: #555; font-size: 11px; margin-left: auto; font-family: 'JetBrains Mono', monospace; }
+  .output-area { border-top: 1px solid #333; background: #111; min-height: 60px; padding: 14px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.7; color: #aaa; display: none; white-space: pre-wrap; word-break: break-word; }
+  .output-area.visible { display: block; }
+  .output-area.success { color: #89d185; }
+  .output-area.error-out { color: #f48771; }
+  .output-area.loading-out { color: #888; }
+  .output-plot { border-top: 1px solid #333; background: #fff; display: none; padding: 16px; text-align: center; }
+  .output-plot.visible { display: block; }
+  .output-plot img { max-width: 100%; border-radius: 6px; }
+  .quiz-block { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 28px; animation: fadeUp 0.4s ease; }
+  .quiz-q { font-family: 'Fraunces', serif; font-size: 17px; margin-bottom: 16px; color: var(--ink); }
+  .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz-opt { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 8px; cursor: pointer; font-size: 14px; transition: all 0.2s; background: var(--cream); font-family: 'JetBrains Mono', monospace; }
+  .quiz-opt:hover { border-color: var(--sage); background: var(--moss); }
+  .quiz-opt.correct { border-color: var(--sage); background: #e8f5e9; color: #27ae60; }
+  .quiz-opt.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .quiz-feedback { margin-top: 14px; font-size: 14px; padding: 10px 14px; border-radius: 6px; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.correct { background: #e8f5e9; color: #27ae60; }
+  .quiz-feedback.wrong { background: var(--red-light); color: var(--red); }
+  .nav-buttons { padding: 20px 48px; display: flex; gap: 12px; border-top: 1px solid var(--border); background: #fff; }
+  .btn-nav { padding: 10px 24px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; border: 2px solid var(--forest); }
+  .btn-nav.primary { background: var(--forest); color: #fff; }
+  .btn-nav.primary:hover { background: #113851; }
+  .btn-nav.secondary { background: transparent; color: var(--forest); }
+  .btn-nav.secondary:hover { background: var(--moss); }
+  .hidden { display: none; }
+  code { font-family: 'JetBrains Mono', monospace; background: var(--moss); color: var(--forest); padding: 2px 6px; border-radius: 4px; font-size: 0.88em; }
+  h3 { font-family: 'Fraunces', serif; font-size: 20px; margin-bottom: 10px; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">PublicHealth<span>R</span></div>
+  <div class="tagline">Clinical Data Analysis — Powered by WebR</div>
+  <div id="webr-status">
+    <div class="status-dot" id="status-dot"></div>
+    <span id="status-text">R not loaded yet</span>
+  </div>
+</header>
+
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progress-bar" style="width:12.5%"></div>
+</div>
+
+<aside id="sidebar-menu">
+  <div class="sidebar-label">Module 1: Foundations</div>
+  <button class="lesson-btn active" onclick="goLesson(0)"><div class="lesson-num" id="num-0">1</div><div class="lesson-title">Clinical Variables<span class="lesson-sub">Storing patient data</span></div></button>
+  <button class="lesson-btn" onclick="goLesson(1)"><div class="lesson-num" id="num-1">2</div><div class="lesson-title">Data Frames<span class="lesson-sub">Building medical datasets</span></div></button>
+  
+  <div class="sidebar-label" style="margin-top:20px;">Module 2: Wrangling</div>
+  <button class="lesson-btn" onclick="goLesson(2)"><div class="lesson-num" id="num-2">3</div><div class="lesson-title">Intro to dplyr<span class="lesson-sub">Filtering at-risk patients</span></div></button>
+  <button class="lesson-btn" onclick="goLesson(3)"><div class="lesson-num" id="num-3">4</div><div class="lesson-title">Advanced Wrangling<span class="lesson-sub">Mutate & Summarize</span></div></button>
+  
+  <div class="sidebar-label" style="margin-top:20px;">Module 3: Visualisation</div>
+  <button class="lesson-btn" onclick="goLesson(4)"><div class="lesson-num" id="num-4">5</div><div class="lesson-title">ggplot2 Basics<span class="lesson-sub">The Grammar of Graphics</span></div></button>
+  <button class="lesson-btn" onclick="goLesson(5)"><div class="lesson-num" id="num-5">6</div><div class="lesson-title">Distributions<span class="lesson-sub">Boxplots & Histograms</span></div></button>
+  <button class="lesson-btn" onclick="goLesson(6)"><div class="lesson-num" id="num-6">7</div><div class="lesson-title">Pro Visuals<span class="lesson-sub">Themes, Facets & Labels</span></div></button>
+
+  <div class="sidebar-label" style="margin-top:20px;">Final Project</div>
+  <button class="lesson-btn" onclick="goLesson(7)"><div class="lesson-num" id="num-7">8</div><div class="lesson-title">Clinical Sandbox<span class="lesson-sub">Independent Research</span></div></button>
+</aside>
+
+<main>
+  <div class="lesson-area" id="lesson-area"></div>
+  <div class="nav-buttons">
+    <button class="btn-nav secondary hidden" id="btn-prev" onclick="prevLesson()">&#8592; Previous</button>
+    <button class="btn-nav primary" id="btn-next" onclick="nextLesson()">Next Lesson &#8594;</button>
+  </div>
+</main>
+
+<script type="module">
+import { WebR } from 'https://webr.r-wasm.org/v0.4.2/webr.mjs';
+
+let webR = null;
+let webRReady = false;
+let webRLoading = false;
+let webRInitPromise = null;
+
+const statusDot = document.getElementById('status-dot');
+const statusText = document.getElementById('status-text');
+
+function initWebR() {
+  if (webRReady) return Promise.resolve();
+  if (webRInitPromise) return webRInitPromise;
+  webRLoading = true;
+  statusDot.className = 'status-dot loading';
+  statusText.textContent = 'Loading R Engine...';
+  webR = new WebR();
+  
+  webRInitPromise = webR.init().then(async () => {
+    statusText.textContent = 'Installing dplyr & ggplot2...';
+    await webR.installPackages(['dplyr', 'ggplot2']);
+    
+    statusText.textContent = 'Generating patient database...';
+    // Generates the massive 1000-patient dataset seamlessly in the background!
+    await webR.evalRVoid(`
+      set.seed(123)
+      clinical_data <- data.frame(
+        patient_id = 1001:2000,
+        age = round(rnorm(1000, mean = 55, sd = 15)),
+        gender = sample(c("M", "F"), 1000, replace = TRUE),
+        bmi = round(rnorm(1000, mean = 26.5, sd = 4.2), 1),
+        hb_level = round(rnorm(1000, mean = 13.5, sd = 1.8), 1),
+        readmitted = sample(c(TRUE, FALSE), 1000, replace = TRUE, prob = c(0.15, 0.85))
+      )
+      clinical_data$age <- ifelse(clinical_data$age < 18, 18, clinical_data$age) 
+    `);
+
+    webRReady = true;
+    webRLoading = false;
+    statusDot.className = 'status-dot ready';
+    statusText.textContent = 'R Environment Ready';
+  }).catch(e => {
+    statusDot.className = 'status-dot error';
+    statusText.textContent = 'Failed to load';
+    throw e;
+  });
+  return webRInitPromise;
+}
+
+const lessons = [
+  {
+    category: 'Lesson 1', title: 'Clinical Variables & Vectors',
+    desc: "Welcome! In medical research, we rarely deal with single numbers. We deal with groups of patients. Let's learn to store clinical measurements.",
+    content: `<div class="content-block">
+      <p>We use the combine function <code>c()</code> to group patient readings together into a 'vector'. We assign this to a variable using the <code>&lt;-</code> arrow.</p>
+    </div>`,
+    exercises: [{ label: 'Analyze Patient BMI', code: `# Vector of 5 patient BMI scores\npatient_bmi <- c(22.5, 28.1, 31.0, 19.8, 25.4)\n\n# Calculate the mean BMI of our clinical sample\nmean(patient_bmi)\n\n# Find the maximum BMI in the group\nmax(patient_bmi)`, hint: 'Run code to see the stats', isPlot: false }],
+    quiz: { q: 'Which operator is best practice for assigning a vector to a variable name in R?', options: ['=', '->', '<-', '=='], correctIdx: 2, feedback: 'Correct! While = works, <- is the standard convention in the R community.' }
+  },
+  {
+    category: 'Lesson 2', title: 'Clinical Data Frames',
+    desc: "A data frame is the core structure for clinical trials. It is essentially a spreadsheet where each column is a clinical variable and each row is a patient.",
+    content: `<div class="content-block">
+      <p>Let's build a mock dataset of patients tracking their hemoglobin (Hb) levels.</p>
+    </div>`,
+    exercises: [{ label: 'Build a Patient Database', code: `# Create a clinical data frame\npatients <- data.frame(\n  id = c(101, 102, 103, 104),\n  age = c(45, 28, 62, 34),\n  hb_level = c(11.2, 14.5, 9.8, 12.1),\n  gender = c("F", "M", "F", "F")\n)\n\n# View the structure of the data\nstr(patients)\n\n# Look at the first few rows\nhead(patients)`, hint: 'Data frames mix numbers and text!', isPlot: false }],
+    quiz: { q: 'How do you extract just the hb_level column from the patients dataset?', options: ['patients[hb_level]', 'patients$hb_level', 'patients.hb_level', 'hb_level(patients)'], correctIdx: 1, feedback: 'Correct! The $ operator isolates a specific column vector from a data frame.' }
+  },
+  {
+    category: 'Lesson 3', title: 'Intro to Data Wrangling (dplyr)',
+    desc: "In public health, you often need to isolate specific demographics. The dplyr package makes data manipulation highly intuitive using 'verbs'.",
+    content: `<div class="content-block">
+      <h3>The Filter Verb</h3>
+      <p><code>filter()</code> extracts rows that meet a logical condition. For example, isolating patients with severe anemia.</p>
+    </div>`,
+    exercises: [{ label: 'Isolate At-Risk Patients', code: `library(dplyr)\n\n# We will use our patients dataframe from the previous lesson\npatients <- data.frame(id=1:4, age=c(45,28,62,34), hb_level=c(11.2,14.5,9.8,12.1), gender=c("F","M","F","F"))\n\n# Filter for female patients with Hb below 12.0\nanemic_females <- filter(patients, gender == "F" & hb_level < 12.0)\n\n# View the isolated cohort\nprint(anemic_females)`, hint: 'Notice the double == for logical checks!', isPlot: false }],
+    quiz: { q: 'In dplyr, what does the filter() function do?', options: ['Selects specific columns', 'Creates a new variable', 'Extracts rows based on a condition', 'Sorts the dataset'], correctIdx: 2, feedback: 'Correct! filter() acts on rows, while select() acts on columns.' }
+  },
+  {
+    category: 'Lesson 4', title: 'Advanced Wrangling: Mutate & Summarize',
+    desc: "Sometimes you need to create new clinical metrics from existing data (like calculating BMI from height and weight) or aggregate population statistics.",
+    content: `<div class="content-block">
+      <p>Use <code>mutate()</code> to add new columns, and <code>summarize()</code> combined with <code>group_by()</code> to get stats per demographic group.</p>
+    </div>`,
+    exercises: [{ label: 'Calculate & Aggregate', code: `library(dplyr)\npatients <- data.frame(id=1:4, weight_kg=c(65,85,90,55), height_m=c(1.6,1.8,1.7,1.6), gender=c("F","M","M","F"))\n\n# 1. Mutate: Calculate BMI (kg / m^2)\npatients <- mutate(patients, bmi = weight_kg / (height_m^2))\n\n# 2. Group & Summarize: Average BMI by gender\nsummary_stats <- patients %>%\n  group_by(gender) %>%\n  summarize(avg_bmi = mean(bmi))\n\nprint(summary_stats)`, hint: 'The %>% is the pipe operator. It passes data forward!', isPlot: false }],
+    quiz: { q: 'Which dplyr verb is used to add a new calculated column to your dataset?', options: ['add_col()', 'mutate()', 'summarize()', 'transform()'], correctIdx: 1, feedback: 'Correct! mutate() is the engine for creating or modifying columns.' }
+  },
+  {
+    category: 'Lesson 5', title: 'ggplot2 Basics: Grammar of Graphics',
+    desc: "Welcome to ggplot2, the gold standard for scientific visualization. It builds charts layer by layer.",
+    content: `<div class="content-block">
+      <p>Every plot requires three things: <strong>Data</strong>, <strong>Aesthetics (aes)</strong> mapping variables to x/y axes, and a <strong>Geometry (geom)</strong> to draw the shapes.</p>
+      <div class="callout"><strong>💡 Rule:</strong> In this web environment, always wrap your plot code in <code>print()</code> to render it!</div>
+    </div>`,
+    exercises: [{ label: 'Clinical Scatter Plot', code: `library(ggplot2)\n# Using built-in 'mtcars' dataset (imagine wt is BMI, mpg is blood pressure)\n\nmy_plot <- ggplot(data = mtcars, aes(x = wt, y = mpg)) +\n  geom_point(color = "darkred", size = 3)\n\nprint(my_plot)`, hint: 'Notice how the + symbol adds the points layer.', isPlot: true }],
+    quiz: { q: 'What is the purpose of the aes() function in ggplot2?', options: ['To choose the plot colors', 'To set the title of the graph', 'To map data variables to visual properties like x and y', 'To choose between a scatter plot and a bar chart'], correctIdx: 2, feedback: 'Correct! Aesthetics (aes) link your dataframe columns to the visual canvas.' }
+  },
+  {
+    category: 'Lesson 6', title: 'Visualizing Clinical Distributions',
+    desc: "In public health, understanding how a variable is distributed across a population is vital. We use boxplots for categories and histograms for continuous data.",
+    content: `<div class="content-block">
+      <p>Let's look at how the continuous variable (Miles Per Gallon) is distributed across different categories (Number of Cylinders).</p>
+    </div>`,
+    exercises: [{ label: 'Boxplots & Fill', code: `library(ggplot2)\n\n# We convert cylinder to a 'factor' (category) so ggplot groups them properly\nbox_plot <- ggplot(mtcars, aes(x = as.factor(cyl), y = mpg, fill = as.factor(cyl))) +\n  geom_boxplot() +\n  labs(x = "Number of Cylinders", y = "Miles Per Gallon (mpg)", fill = "Cylinders")\n\nprint(box_plot)`, hint: 'Boxplots show the median and quartiles clearly.', isPlot: true }],
+    quiz: { q: 'Why did we wrap "cyl" in as.factor() inside the aes() function?', options: ['To make the text larger', 'To force ggplot to treat the numbers as distinct categories rather than a continuous scale', 'To remove missing values', 'To change the colors'], correctIdx: 1, feedback: 'Correct! If you do not make it a factor, ggplot might try to plot a continuous axis between categories.' }
+  },
+  {
+    category: 'Lesson 7', title: 'Pro Visuals: Themes & Facets',
+    desc: "To make your research publication-ready, you need to master visual customization. Let's add professional themes and split our data into multiple panels.",
+    content: `<div class="content-block">
+      <p><code>facet_wrap()</code> creates multiple sub-plots based on a category. <code>theme_minimal()</code> instantly cleans up the background.</p>
+    </div>`,
+    exercises: [{ label: 'Publication Ready Plot', code: `library(ggplot2)\n\npro_plot <- ggplot(mtcars, aes(x = wt, y = mpg, color = as.factor(am))) +\n  geom_point(size = 3, alpha = 0.7) +\n  geom_smooth(method = "lm", se = FALSE) + # Adds trend lines!\n  facet_wrap(~ gear) +                     # Splits into panels by gear count\n  theme_minimal() +\n  labs(title = "Efficiency Trends by Vehicle Class",\n       subtitle = "Faceted by Gear Count",\n       x = "Weight (1000 lbs)", y = "MPG", color = "Transmission")\n\nprint(pro_plot)`, hint: 'Run this to see a truly professional data visualization.', isPlot: true }],
+    quiz: { q: 'What does facet_wrap(~ gear) do to the visualization?', options: ['Wraps the text of the title', 'Changes the color of the gears', 'Creates a separate miniature plot for each category of "gear"', 'Adds a border around the entire chart'], correctIdx: 2, feedback: 'Correct! Faceting is one of the most powerful features in ggplot2 for comparing sub-populations.' }
+  },
+  {
+    category: 'Final Project', title: 'The Clinical Sandbox',
+    desc: "You have learned the tools. Now it's time to be the lead researcher. We have pre-loaded a massive dataframe called <code>clinical_data</code> containing 1,000 patient records.",
+    content: `<div class="content-block">
+      <h3>Your Objective</h3>
+      <p>Explore the <code>clinical_data</code> dataset. It contains the following columns: <code>patient_id</code>, <code>age</code>, <code>gender</code>, <code>bmi</code>, <code>hb_level</code>, and <code>readmitted</code> (whether they returned to the hospital within 30 days).</p>
+      <div class="callout"><strong>🏆 The Challenge:</strong> Can you use <strong>dplyr</strong> and <strong>ggplot2</strong> to discover if there is a visual relationship between a patient's BMI and their readmission status?</div>
+    </div>`,
+    exercises: [
+      { 
+        label: 'Lead Researcher Console', 
+        code: `library(dplyr)\nlibrary(ggplot2)\n\n# The dataset 'clinical_data' is already loaded in the background.\n# Tip: Start by using head(clinical_data) or summary(clinical_data)\n\n\n\n# Write your analysis and plotting code below:\n\n`, 
+        hint: 'You have total freedom here. Remember to print() your final plots!', 
+        isPlot: true 
+      }
+    ],
+    quiz: { 
+      q: 'When performing independent research, why is it critical to look at summary() before building complex ggplot visualizations?', 
+      options: ['Because ggplot will crash if you do not run summary first.', 'To check for missing values, outliers, and understand the basic distribution of your variables.', 'To automatically calculate the p-value of your hypothesis.', 'Because it converts characters into factors automatically.'], 
+      correctIdx: 1, 
+      feedback: 'Correct! A good data scientist always gets a "feel" for the raw data before trying to map it visually.' 
+    }
+  }
+];
+
+let currentLesson = 0;
+const completed = new Set();
+
+function renderLesson(idx) {
+  const L = lessons[idx];
+  const area = document.getElementById('lesson-area');
+  let html = `<div class="lesson-header"><div class="lesson-category">${L.category}</div><h1>${L.title}</h1><p class="lesson-desc">${L.desc}</p></div>${L.content}`;
+
+  L.exercises.forEach((ex, i) => {
+    html += `<div class="exercise" id="ex-${idx}-${i}">
+      <div class="exercise-header"><span>⚕️</span><div><div>${ex.label}</div><div class="ex-label">Clinical R Sandbox</div></div></div>
+      <div class="code-editor-container" id="editor-${idx}-${i}">${ex.code}</div>
+      <div class="run-bar">
+        <button class="btn-run" onclick="runCode(${idx},${i},${!!ex.isPlot})">▶ Run Code</button>
+        <button class="btn-reset" onclick="resetCode(${idx},${i})">↺ Reset</button>
+        <span class="run-hint">Ctrl+Enter to run</span>
+      </div>
+      <div class="output-area" id="out-${idx}-${i}"></div>
+      <div class="output-plot" id="plot-${idx}-${i}"></div>
+    </div>`;
+  });
+
+  const q = L.quiz;
+  html += `<div class="quiz-block"><div class="quiz-q">🧠 Knowledge Check: ${q.q}</div><div class="quiz-options">
+    ${q.options.map((opt, i) => `<div class="quiz-opt" id="qopt-${idx}-${i}" onclick="answerQuiz(${idx},${i})"><code>${['A','B','C','D'][i]}</code> ${opt}</div>`).join('')}
+  </div><div class="quiz-feedback" id="qfb-${idx}">${q.feedback}</div></div>`;
+
+  area.innerHTML = html;
+  area.scrollTop = 0;
+
+  // Initialize Dynamic Ace Editors for this lesson
+  if (!window.codeEditors) window.codeEditors = {};
+  L.exercises.forEach((ex, i) => {
+    const editorId = `editor-${idx}-${i}`;
+    const editor = ace.edit(editorId);
+    editor.setTheme("ace/theme/tomorrow_night_eighties");
+    editor.session.setMode("ace/mode/r");
+    editor.setOptions({
+      fontSize: "14px", fontFamily: "'JetBrains Mono', monospace",
+      showPrintMargin: false, wrap: true, highlightActiveLine: true
+    });
+    
+    // Add keyboard shortcut (Ctrl+Enter to run) inside the editor
+    editor.commands.addCommand({
+        name: 'run',
+        bindKey: {win: 'Ctrl-Enter',  mac: 'Command-Enter'},
+        exec: function(editor) {
+            runCode(idx, i, !!ex.isPlot);
+        }
+    });
+
+    window.codeEditors[`${idx}-${i}`] = editor;
+  });
+
+  document.querySelectorAll('.lesson-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  document.getElementById('btn-prev').classList.toggle('hidden', idx === 0);
+  document.getElementById('btn-next').textContent = idx === lessons.length - 1 ? '🎉 Finish Course' : 'Next Lesson →';
+  document.getElementById('progress-bar').style.width = ((idx + 1) / lessons.length * 100) + '%';
+}
+
+window.runCode = async function(lessonIdx, exIdx, isPlot) {
+  // Grab the code from the dynamic Ace Editor instead of a textarea
+  const code = window.codeEditors[`${lessonIdx}-${exIdx}`].getValue();
+  const outEl = document.getElementById(`out-${lessonIdx}-${exIdx}`);
+  const plotEl = document.getElementById(`plot-${lessonIdx}-${exIdx}`);
+
+  if (!webRReady) {
+    outEl.textContent = 'Booting R environment and installing packages (~15 sec)...';
+    outEl.className = 'output-area visible loading-out';
+    try { await initWebR(); } catch(e) { outEl.textContent = 'Error: ' + e.message; outEl.className = 'output-area visible error-out'; return; }
+  }
+
+  outEl.textContent = 'Computing...';
+  outEl.className = 'output-area visible loading-out';
+  plotEl.className = 'output-plot';
+  try {
+    if (isPlot) {
+      await webR.evalRVoid(`png_file <- tempfile(fileext=".png"); png(png_file, width=700, height=450, res=96); ${code}; dev.off()`);
+      const pngData = await webR.evalR(`readBin(png_file, "raw", file.info(png_file)$size)`);
+      const arr = await pngData.toArray();
+      const blob = new Blob([new Uint8Array(arr)], { type: 'image/png' });
+      plotEl.innerHTML = `<img src="${URL.createObjectURL(blob)}" alt="Clinical Plot">`;
+      plotEl.className = 'output-plot visible';
+      outEl.className = 'output-area';
+    } else {
+      const shelter = await new webR.Shelter();
+      try {
+        const captured = await shelter.captureR(code, { withAutoprint: true });
+        const output = captured.output.filter(o => o.type === 'stdout' || o.type === 'stderr').map(o => o.data).join('\n');
+        outEl.textContent = output || '(Command executed successfully, no output generated)';
+        outEl.className = 'output-area visible success';
+      } finally { shelter.purge(); }
+    }
+  } catch(e) { outEl.textContent = 'Syntax Error: ' + e.message; outEl.className = 'output-area visible error-out'; }
+};
+
+window.resetCode = function(lessonIdx, exIdx) {
+  // Reset the code inside the dynamic Ace Editor
+  window.codeEditors[`${lessonIdx}-${exIdx}`].setValue(lessons[lessonIdx].exercises[exIdx].code, -1);
+  document.getElementById(`out-${lessonIdx}-${exIdx}`).className = 'output-area';
+  document.getElementById(`plot-${lessonIdx}-${exIdx}`).className = 'output-plot';
+};
+
+window.answerQuiz = function(lessonIdx, optIdx) {
+  const q = lessons[lessonIdx].quiz;
+  const opts = document.querySelectorAll(`[id^="qopt-${lessonIdx}-"]`);
+  const fb = document.getElementById(`qfb-${lessonIdx}`);
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  opts[optIdx].classList.add(optIdx === q.correctIdx ? 'correct' : 'wrong');
+  opts[q.correctIdx].classList.add('correct');
+  fb.className = 'quiz-feedback show ' + (optIdx === q.correctIdx ? 'correct' : 'wrong');
+  if (optIdx === q.correctIdx) {
+    completed.add(lessonIdx);
+    document.getElementById(`num-${lessonIdx}`).textContent = '✓';
+    document.querySelectorAll('.lesson-btn')[lessonIdx].classList.add('done');
+  }
+};
+
+window.goLesson = function(idx) { currentLesson = idx; renderLesson(idx); };
+window.nextLesson = function() {
+  if (currentLesson < lessons.length - 1) { currentLesson++; renderLesson(currentLesson); }
+  else {
+    document.getElementById('lesson-area').innerHTML = `<div style="text-align:center;padding:60px 20px"><div style="font-size:64px;margin-bottom:20px">🎓</div><h1 style="font-family:'Fraunces',serif;font-size:40px;margin-bottom:16px">Curriculum Complete</h1><p style="color:#555;font-size:17px;max-width:480px;margin:0 auto 28px">You have successfully mastered clinical data wrangling and visualization.</p><button class="btn-nav primary" onclick="goLesson(0)" style="display:inline-block">Review Module 1 ↺</button></div>`;
+  }
+};
+window.prevLesson = function() { if (currentLesson > 0) { currentLesson--; renderLesson(currentLesson); } };
+
+renderLesson(0);
+</script>
+</body>
+</html>
